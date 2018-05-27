@@ -1,0 +1,67 @@
+theme = "blackburn"
+
+baseurl = "/"
+languageCode = "en-us"
+title = "Awesome Patrick"
+author = "Patrick Yu"
+copyright = "&copy2018 Patrick Yu<br>All rights reserved."
+canonifyurls = true
+paginate = 4
+hasCJKLanguage = true
+
+[permalinks]
+  post = "/:year/:month/:title/"
+
+[indexes]
+  topic = "topics"
+  tag = "tags"
+
+[params]
+  subtitle = "Patrick's Ramblings"
+  brand = "Awesome<br>Patrick"
+  disqus = "awesome-patrick"
+  # CSS name for highlight.js
+  highlightjs = "github"
+  dateFormat = "02 Jan 2006, 15:04"
+
+[menu]
+  # Shown in the side menu.
+  [[menu.main]]
+    name = "Home"
+    pre = "<i class='fa fa-home fa-fw'></i>"
+    weight = 1
+    identifier = "home"
+    url = "/"
+  [[menu.main]]
+    name = "Topics"
+    pre = "<i class='fa fa-folder fa-fw'></i>"
+    weight = 2
+    identifier = "topic"
+    url = "/topics/"
+  [[menu.main]]
+    name = "Tags"
+    pre = "<i class='fa fa-tag fa-fw'></i>"
+    weight = 3
+    identifier = "tag"
+    url = "/tags/"
+  [[menu.main]]
+    name = "Posts"
+    pre = "<i class='fa fa-list fa-fw'></i>"
+    weight = 4
+    identifier = "post"
+    url = "/post/"
+  [[menu.main]]
+    name = "About"
+    pre = "<i class='fa fa-user fa-fw'></i>"
+    weight = 5
+    identifier = "about"
+    url = "/about/"
+#  [[menu.main]]
+#    name = "Contact"
+#    pre = "<i class='fa fa-phone fa-fw'></i>"
+#    weight = 4
+#    url = "/contact/"
+
+[social]
+#  github = "tramamte"
+#  gitlab = "tramamte"
