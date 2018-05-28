@@ -2,8 +2,8 @@
 title = "Comments"
 description = "주석"
 date = "2018-05-28T23:09:58+09:00"
-topics = ["Go"]
-tags = ["Go", "comment"]
+topics = ["go"]
+tags = ["go", "comment"]
 draft = false
 +++
 
