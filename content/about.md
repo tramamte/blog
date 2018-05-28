@@ -1,34 +1,63 @@
 +++
 title = "About"
-description = "Start English 일부만 한글로 night 입력해 봅시다."
+description = "About me and this blog"
 date = "2018-05-26T14:24:11+09:00"
 +++
 
 # Patrick Yu
-유용희
-한글도 입력할 수 있습니다.
 
-Hugo is a static site engine written in Go.
+> A question not asked is a door not opened.
 
+이것저것 관심만 많은 **잡식성 개발자**입니다.
 
-It makes use of a variety of open source projects including:
+**빵**을 굽습니다.
 
-* [Cobra](https://github.com/spf13/cobra)
-* [Viper](https://github.com/spf13/viper)
-* [J Walter Weatherman](https://github.com/spf13/jWalterWeatherman)
-* [Cast](https://github.com/spf13/cast)
+빵보다는 **빵 만들기**를 즐깁니다.
 
-Learn more and contribute on [GitHub](https://github.com/spf13).
+**귀촌**을 꿈꿉니다.
 
-## Setup
+---
 
-Some fun facts about [Hugo](http://gohugo.io/):
+An **omnivorous developer**, who has only interests in variety fields.
 
-* Built in [Go](http://golang.org/)
-* Loosely inspired by [Jekyll](http://jekyllrb.com/)
-* Primarily developed by [spf13](http://spf13.com/) on the train while commuting to and from Manhattan.
-* Coded in [Vim](http://vim.org) using [spf13-vim](http://vim.spf13.com/)
+Bake **bread**.
 
-Have questions or suggestions? Feel free to [open an issue on GitHub](https://github.com/spf13/hugo/issues/new) or [ask me on Twitter](https://twitter.com/spf13).
+Enjoy **making bread** rather than bread itself.
 
-Thanks for reading!
+Dream of **returning to rural**.
+
+![bread](/img/bread.png)
+
+<br>
+
+# Awesome Patrick
+
+Awesome Patrick은 제 개인적 관심사들을 정리하기 위한 블로그입니다. 
+
+[GitHub Pages](https://pages.github.com/)에서 호스팅 중입니다.
+
+[Hugo](https://gohugo.io/)를 이용해 컨텐츠를 제작합니다.
+
+[Yoshiharu Yamashita](http://yoshiharuyamashita.com/)의 [Blackburn](https://github.com/yoshiharuyamashita/blackburn)을 기반으로한 수정 테마를 사용중입니다.
+
+### Hugo를 사용하는 이유
+
+GitHub Pages에서 기본으로 지원하는 [Jekyll](https://jekyllrb.com/)을 사용하려 했으나 Ruby, bundler, jekyll 등 다양한 환경에서 컨텐츠를 제작하기 위해서 설치하고 설정해야 하는 것들이 너무 많더군요.
+
+Hugo는 실행파일 하나! 그래서 선택했습니다.
+
+---
+
+Awesome Patrick is a blog for managing my personal interestes.
+
+Being hosted on [GitHub Pages](https://pages.github.com/).
+
+Making contents using [Hugo](https://gohugo.io/).
+
+Using modified [Blackburn](https://github.com/yoshiharuyamashita/blackburn) theme originally made by [Yoshiharu Yamashita](http://yoshiharuyamashita.com/).
+
+### The reason for using Hugo
+
+[Jekyll](https://jekyllrb.com/), which is the default tool supported by Github Pages, needs many installations and settings.
+
+Hugo, while, needs only one execution file! This is why I use it.
