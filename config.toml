@@ -8,6 +8,12 @@ copyright = "&copy2018 Patrick Yu<br>All rights reserved."
 canonifyurls = true
 paginate = 4
 hasCJKLanguage = true
+# Server-side Chroma syntax highlighting
+pygmentsCodefences = true
+pygmentsUseClassic = false
+pygmentsStyle = "emacs"
+pygmentsCodefencesGuessSyntax = true
+#pygmentsOptions = "linenos=table"
 
 [permalinks]
   post = "/:year/:month/:title/"
@@ -21,7 +27,7 @@ hasCJKLanguage = true
   brand = "Awesome<br>Patrick"
   disqus = "awesome-patrick"
   # CSS name for highlight.js
-  highlightjs = "github"
+  #highlightjs = "github"
   dateFormat = "02 Jan 2006, 15:04"
 
 [menu]
