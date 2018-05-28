@@ -18,8 +18,8 @@ $ hugo server
 [hugo server](https://gohugo.io/commands/hugo_server/)에 다양한 사용법이 있는데 다음 두 가지가 중요.
 
 ```bash
- -b, --baseURL string  hostname (and path) to the root
-     --bind string     interface to which the server will bind
+-b, --baseURL string  hostname (and path) to the root
+    --bind string     interface to which the server will bind
 ```
 
 실행 전 장치의 IP 주소를 확인하고,
