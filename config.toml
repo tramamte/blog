@@ -17,7 +17,7 @@ hasCJKLanguage = true
   tag = "tags"
 
 [params]
-  subtitle = "Patrick's Ramblings"
+  subtitle = "Patrick's ramblings"
   brand = "Awesome<br>Patrick"
   disqus = "awesome-patrick"
   # CSS name for highlight.js
