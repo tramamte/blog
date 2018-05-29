@@ -18,7 +18,7 @@ date = "2018-05-26T14:24:11+09:00"
 
 ---
 
-An **omnivorous developer**, who has only interests in variety fields.
+An **omnivorous developer**, only have interests in variety fields.
 
 Bake **bread**.
 

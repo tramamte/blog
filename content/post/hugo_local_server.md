@@ -1,9 +1,9 @@
 +++
 title = "Hugo Local Server 접속 방법"
 description = "작성중인 내용을 다른 장치에서 확인하기"
-date = "2018-05-28T16:06:37+09:00"
+date = "2018-05-28T19:06:37+09:00"
 topics = ["hugo"]
-tags = ["hugo"]
+tags = ["local", "server"]
 draft = false
 +++
 

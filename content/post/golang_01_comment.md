@@ -3,7 +3,7 @@ title = "Comments"
 description = "주석"
 date = "2018-05-28T23:09:58+09:00"
 topics = ["go"]
-tags = ["go", "comment"]
+tags = ["syntax"]
 draft = false
 +++
 
