@@ -48,7 +48,7 @@ Hugo는 실행파일 하나! 그래서 선택했습니다.
 
 ---
 
-Awesome Patrick is a blog for managing my personal interestes.
+Awesome Patrick is a blog for managing my personal interests.
 
 Being hosted on [GitHub Pages](https://pages.github.com/).
 
