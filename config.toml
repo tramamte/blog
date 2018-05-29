@@ -16,7 +16,11 @@ pygmentsCodefencesGuessSyntax = true
 #pygmentsOptions = "linenos=table"
 
 [permalinks]
-  post = "/:year/:month/:title/"
+  post = "/:year/:month/:day/:slug/"
+
+[taxonomies]
+  topic = "topics"
+  tag = "tags"
 
 [indexes]
   topic = "topics"
