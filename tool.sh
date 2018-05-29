@@ -44,17 +44,17 @@ usage() {
 }
 
 if [ $# -eq 0 ]; then
-	usage $0
+	usage "$0"
 else
 	if [ "$1" == "update" -o "$1" == "u" ]; then
 		update
 	elif [ "$1" == "push" -o "$1" == "p" ]; then
 		shift
-		push $@
+		push "$@"
 	elif [ "$1" == "deploy" -o "$1" == "d" ]; then
 		shift
-		deploy $@
+		deploy "$@"
 	else
-		usage $0
+		usage "$0"
 	fi
 fi
