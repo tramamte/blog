@@ -29,9 +29,9 @@ Go는 C/C++이나 Java처럼 세미콜론(;)을 사용하는 언어이다. 하�
 
 - 개행 전 마지막 토큰이 다음 중 하나인 경우
 
-  ```go
-  break continue fallthrough return ++ -- ) } ]
-  ```
+```go
+break continue fallthrough return ++ -- ) } ]
+```
 
 위 경우들에는 세미콜론이 무조건 삽입되며, 복잡한 구문을 한 줄에 표현하기 위해 다음 경우에는 상황에 맞게 세미콜론이 삽입된다.
 
