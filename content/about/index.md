@@ -26,7 +26,7 @@ Enjoy **making bread** rather than bread itself.
 
 Dream of **returning to rural**.
 
-![bread](/img/bread.png)
+![bread](./bread.png)
 
 <br>
 
