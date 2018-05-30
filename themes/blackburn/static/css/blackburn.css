@@ -148,7 +148,9 @@ article > footer {
 
 #menu {
   background: #001520;
+  /* if set, memu bar can't be scrolled
   overflow: hidden;
+  */
 }
 
 #menu a {
