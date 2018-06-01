@@ -19,14 +19,14 @@
 	data-action="zoom"
 	>
 	{{ if or (.Get "title") (.Get "caption") }}
-	<figurecaption>
+	<figcaption>
 	{{ if .Get "title" }}
 	<h4>{{ .Get "title" }}</h4>
 	{{ end }}
 	{{ if .Get "caption" }}
 	<p>{{ .Get "caption" }}</p>
 	{{ end }}
-	</figurecaption>
+	</figcaption>
 	{{ end }}
 </figure>
 {{ end }}
