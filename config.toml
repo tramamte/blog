@@ -6,7 +6,7 @@ title = "Awesome Patrick"
 author = "Patrick Yu"
 copyright = "&copy2018 Patrick Yu<br>All rights reserved."
 canonifyurls = true
-paginate = 4
+paginate = 5
 hasCJKLanguage = true
 # Server-side Chroma syntax highlighting
 pygmentsCodefences = true
