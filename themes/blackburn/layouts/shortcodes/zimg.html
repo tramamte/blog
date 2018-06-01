@@ -1,0 +1,32 @@
+{{ if and (.IsNamedParams) (.Get "src") }}
+<figure>
+  <img
+	src="{{ .Get "src" }}"
+	{{ if .Get "alt" }}
+	alt="{{ .Get "alt" }}"
+	{{ end }}
+	{{ if .Get "width" }}
+	width="{{ .Get "width" }}"
+	{{ end }}
+	{{ if .Get "height" }}
+	height="{{ .Get "height" }}"
+	{{ end }}
+	{{ if .Get "mouse-title" }}
+	title="{{ .Get "mouse-title" }}"
+	{{ else }}
+	title = "click to zoom"
+	{{ end }}
+	data-action="zoom"
+	>
+	{{ if or (.Get "title") (.Get "caption") }}
+	<figurecaption>
+	{{ if .Get "title" }}
+	<h4>{{ .Get "title" }}</h4>
+	{{ end }}
+	{{ if .Get "caption" }}
+	<p>{{ .Get "caption" }}</p>
+	{{ end }}
+	</figurecaption>
+	{{ end }}
+</figure>
+{{ end }}
