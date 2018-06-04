@@ -1,0 +1,63 @@
++++
+title = "jBPM / Drools 개발환경 구성"
+description = "JBoss jBPM and Drools Eclipse 개발환경 구성하기"
+topics = ["bpm/brm"]
+tags = ["drools", "jbpm", "bpm", "brm"]
+slug = "eclipse-install"
+date = "2018-06-04T13:56:33+09:00"
+draft = true
++++
+
+## 1. Oracle JDK 설치
+
+> *Java SE 8 버전 추천*
+
+## 2. Eclipse 설치
+
+Eclipse IDE for Java EE Developers 받아서 압축 해제
+
+## 3. Runtime 설치
+
+* [Drools](https://www.drools.org)에서 Final 버전 내려받아 적당한 위치에 압축 해제
+* [jBPM](https://www.jbpm.org/download/download.html)에서 Final-bin 버전 (.Final-bin.zip) 내려받아 적당한 위치에 압축 해제
+  * 필요한 경우 예제 파일 (.Final-examples.zip)도 내려받아 적당한 위치에 압축 해제
+
+## 4. JBoss Tools 설치
+
+> *설치하지 않으면 Plugin 설치 시 dependency error 발생*
+
+1. Eclipse 실행
+2. Help - Eclipse Marketplace... 실행
+3. 'jboss' 검색
+4. JBoss Tools x.x.x.Final 설치
+
+## 5. Plugin 설치
+
+1. [여기](http://download.jboss.org/drools/release/)에서 버전을 선택하거나 latestFinal 선택해 org.drools.updatesite 주소복사
+2. Eclipse 실행
+3. Help - Install New Software... 실행
+4. Add... 버튼 클릭
+5. Name은 'Drools & jBPM Plugin' 등 적당한 값으로 넣고, Location에 복사한 주소 입력
+6. 전체 선택해 설치
+
+## 6.Runtime 설정
+
+1. Eclipse 실행
+2. Preferences 실행 (Windows/Linux: Windows - Preferences, macOS: Eclipse - Preferences)
+3. 좌측 메뉴에서 jBPM > Installed jBPM Runtime 선택
+4. Add... 버튼 클릭
+5. Browse... 버튼 클릭 후 3단계에서 압축 풀어 둔 jBPM의 bin 디렉토리 선택
+6. Name, Version 등 자동 입력된 것 확인 후 OK
+7. 좌측 메뉴 Drools > Installed Drools Runtime도 동일한 방식으로 설정 (Drools는 압축 풀어 둔 디렉토리에서 binaries 선택)
+
+------
+
+### (추가) BPMN2 Modeler 설치
+
+> *기본 modeler는 .bpmn2 file open 시 exception 발생*
+
+1. Eclipse 실행
+2. Help - Eclipse Marketplace... 실행
+3. 'bpmn2' 검색
+4. Eclipse BPMN2 Modeler x.x.x 설치
+5. 설치 옵션에서 jBPM Runtime Extension Feature 추가
