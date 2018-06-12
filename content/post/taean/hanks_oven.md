@@ -1,0 +1,39 @@
++++
+title = "피자 화덕 만들기 1"
+description = "Hank's oven 제작 스토리 1편 기초 공사"
+topics = ["taean"]
+tags = ["oven"]
+slug = "hanks-oven-01"
+date = "2018-06-12T12:15:17+09:00"
+draft = false
++++
+
+---
+
+기술이 없으니 몸으로 부딪히는 피자 화덕 제작기
+
+---
+
+{{< zimg src="/post/taean/oven_01.png" width="480" >}}
+
+바닥에 자갈을 깔아둔지라 우선 자갈을 모두 걷어내고 기초 공사 준비
+
+{{< zimg src="/post/taean/oven_02.png"  width="480">}}
+
+땅을 파고 나무판으로 막아 거푸집 완성. 안에는 땅 파면서 나온 돌 투척
+
+{{< zimg src="/post/taean/oven_03.png"  width="480">}}
+
+몰탈로 미장. 예뻐져라~ 예뻐져라~
+
+{{< zimg src="/post/taean/oven_04.png"  width="480">}}
+
+싸인 하나 남겨주시고
+
+{{< zimg src="/post/taean/oven_05.png"  width="480">}}
+
+기초 공사 완료!
+
+<br>
+
+*To be continued~*
