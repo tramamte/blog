@@ -16,8 +16,7 @@
 	{{ else }}
 	title = "click to zoom"
 	{{ end }}
-	data-action="zoom"
-	class="zimg">
+	data-action="zoom">
 	{{ if or (.Get "title") (.Get "caption") }}
 	<figcaption>
 	{{ if .Get "title" }}
