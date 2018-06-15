@@ -80,11 +80,10 @@ The content `<div>` is where all your content goes.
 The `#menu` `<div>` is the parent `<div>` that contains the `.pure-menu` that
 appears on the left side of the page.
 */
-
 #menu {
     margin-left: -150px; /* "#menu" width */
-    width: 150px;
-    height: 100vh;
+    width: 150px;    
+    height: 100%;
     position: fixed;
     top: 0;
     left: 0;
