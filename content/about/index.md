@@ -40,7 +40,7 @@ Awesome Patrick은 제 개인적 관심사들을 정리하기 위한 블로그�
 
 [Yoshiharu Yamashita](http://yoshiharuyamashita.com/)의 [Blackburn](https://github.com/yoshiharuyamashita/blackburn)을 기반으로한 수정 테마를 사용중입니다.
 
-### Hugo를 사용하는 이유
+## Hugo를 사용하는 이유
 
 GitHub Pages에서 기본으로 지원하는 [Jekyll](https://jekyllrb.com/)을 사용하려 했으나 Ruby, bundler, jekyll 등 다양한 환경에서 컨텐츠를 제작하기 위해서 설치하고 설정해야 하는 것들이 너무 많더군요.
 
@@ -56,7 +56,7 @@ Making contents using [Hugo](https://gohugo.io/).
 
 Using modified [Blackburn](https://github.com/yoshiharuyamashita/blackburn) theme originally made by [Yoshiharu Yamashita](http://yoshiharuyamashita.com/).
 
-### The reason for using Hugo
+## The reason for using Hugo
 
 [Jekyll](https://jekyllrb.com/), which is the default tool supported by Github Pages, needs many installations and settings.
 
