@@ -28,8 +28,6 @@ Dream of **returning to rural**.
 
 ![bread](./bread.png)
 
-<br>
-
 # Awesome Patrick
 
 Awesome Patrick은 제 개인적 관심사들을 정리하기 위한 블로그입니다. 
