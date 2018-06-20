@@ -1,8 +1,8 @@
 {{ $paginator := .Paginator }}
-{{ $frst := "fa fa-angle-double-left fa-lg"}}
-{{ $prev := "fa fa-angle-left fa-lg"}}
-{{ $next := "fa fa-angle-right fa-lg"}}
-{{ $last := "fa fa-angle-double-right fa-lg"}}
+{{ $frst := "fa fa-angle-double-left fa-fw"}}
+{{ $prev := "fa fa-angle-left fa-fw"}}
+{{ $next := "fa fa-angle-right fa-fw"}}
+{{ $last := "fa fa-angle-double-right fa-fw"}}
 
 {{ if gt $paginator.TotalPages 1 }}
 <nav class="pagination" role="pagination">
