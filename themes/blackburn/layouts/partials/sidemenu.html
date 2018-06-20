@@ -5,37 +5,28 @@
 </a>
 
 <div id="menu">
-  <section id="menu-section">
-    <header>
-      {{ partial "brand.html" . }}
-    </header>
-    <section>
-      <div class="pure-menu">
-        <ul class="pure-menu-list">
-          {{ range .Site.Menus.main }}
-          {{ if .HasChildren }}
-            <li class="pure-menu-item pure-menu-has-children">
-              <a class="pure-menu-link" href="#">{{ .Pre }}{{ .Name }}</a>
-              <ul class="pure-menu-children">
-                {{ range .Children }}
-                <li class="pure-menu-item">
-                  <a href="{{ .URL }}">{{ .Name }}</a>
-                </li>
-                {{ end }}
-              </ul>
-          {{else}}
+  {{ partial "brand.html" . }}
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      {{ range .Site.Menus.main }}
+      {{ if .HasChildren }}
+        <li class="pure-menu-item pure-menu-has-children">
+          <a class="pure-menu-link" href="#">{{ .Pre }}{{ .Name }}</a>
+          <ul class="pure-menu-children">
+            {{ range .Children }}
             <li class="pure-menu-item">
-              <a class="pure-menu-link" {{ printf "href=%q" .URL | safeHTMLAttr }}>{{ .Pre }}{{ .Name }}</a>
-          {{end}}
+              <a href="{{ .URL }}">{{ .Name }}</a>
             </li>
-          {{end}}
-        </ul>
-      </div>
-      {{ partial "social.html" . }}
-    </section>
-    <footer>
-    {{ partial "copyright.html" . }}
-    </footer>
-  </section>
+            {{ end }}
+          </ul>
+      {{else}}
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" {{ printf "href=%q" .URL | safeHTMLAttr }}>{{ .Pre }}{{ .Name }}</a>
+      {{end}}
+        </li>
+      {{end}}
+    </ul>
+  </div>
+  {{ partial "social.html" . }}
 </div>
-<div id="menuBg"></div>
+<div id="menuBackground"></div>
