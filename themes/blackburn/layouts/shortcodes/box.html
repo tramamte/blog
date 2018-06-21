@@ -1,0 +1,9 @@
+{{ if .Inner }}
+{{ if .Get 0 }}
+<div class="box" style="background: {{ .Get 0 }};">
+{{ else }}
+<div class="box">
+{{ end }}
+{{ .Inner }}
+</div>
+{{ end }}
