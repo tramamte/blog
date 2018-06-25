@@ -1,12 +1,3 @@
-<!--<link href="https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.css" type="text/css" rel="stylesheet"/>-->
-<div class="mermaid" align="{{ if .Get "align" }}{{ .Get "align" }}{{ else }}center{{ end }}">{{ safeHTML .Inner  }}</div>
-<script defer src="https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js" onload="mermaidReady()"></script>
-<script>
-var mermaidReady = function() {
-	var config = {
-		startOnLoad: true,
-		theme: "forest"
-	}
-	mermaid.initialize(config);
-};
-</script>
+<div class="mermaid" align="{{ if .Get "align" }}{{ .Get "align" }}{{ else }}center{{ end }}">
+  {{ safeHTML .Inner  }}
+</div>

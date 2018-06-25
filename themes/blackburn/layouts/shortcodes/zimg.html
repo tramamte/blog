@@ -1,22 +1,32 @@
 {{ if and (.IsNamedParams) (.Get "src") }}
 <figure>
-  <img
-	src="{{ .Get "src" }}"
-	{{ if .Get "alt" }}
-	alt="{{ .Get "alt" }}"
-	{{ end }}
-	{{ if .Get "width" }}
-	width="{{ .Get "width" }}"
-	{{ end }}
-	{{ if .Get "height" }}
-	height="{{ .Get "height" }}"
-	{{ end }}
-	{{ if .Get "mouse-title" }}
-	title="{{ .Get "mouse-title" }}"
-	{{ else }}
-	title = "click to zoom"
-	{{ end }}
-	data-action="zoom">
+	<div style="position: relative;">
+	<img
+		src="{{ .Get "src" }}"
+		{{ if .Get "alt" }}
+		alt="{{ .Get "alt" }}"
+		{{ end }}
+		{{ if .Get "width" }}
+		width="{{ .Get "width" }}"
+		{{ end }}
+		{{ if .Get "height" }}
+		height="{{ .Get "height" }}"
+		{{ end }}
+		{{ if .Get "mouse-title" }}
+		title="{{ .Get "mouse-title" }}"
+		{{ else }}
+		title="click to zoom"
+		{{ end }}
+		data-action="zoom">
+		<div style="
+			position: absolute; 
+			bottom: 0; 
+			background: rgb(0, 0, 0);
+			background: rgba(0, 0, 0, 0.5);
+			opacity:1;
+			color: white;
+			padding: 8px 5px;"><i class="fa fa-search-plus fa-lg fa-fw"></i></div>
+		</div>
 	{{ if or (.Get "title") (.Get "caption") }}
 	<figcaption>
 	{{ if .Get "title" }}
