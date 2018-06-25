@@ -30,45 +30,35 @@ asdgadsgag `hello`
 
 {{% /box %}}
 
-# 
 
-# h1
 
-h1
+{{< mermaid >}}
+sequenceDiagram
+    participant A as Alice
+    participant B as Bob
+    A->>John: Hello John, how are you?
+    loop Healthcheck
+        John->>John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts <br/>prevail...
+    John-->>A: Great!
+    John->>B: How about you?
+    B-->>John: Jolly good!
+{{< /mermaid >}}
 
-## h2
+{{< mermaid >}}
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+{{< /mermaid >}}
 
-h2
-
-### h3
-
-h3
-
-#### h4
-
-h4
-
-##### h5
-
-h5
-
-# h1
-
-h1
-
-## h2
-
-h2
-
-### h3
-
-h3
-
-#### h4
-
-h4
-
-##### h5
-
-h5
+{{< mermaid >}}
+graph LR;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+{{< /mermaid >}}
 
