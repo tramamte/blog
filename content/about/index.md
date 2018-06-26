@@ -6,7 +6,9 @@ date = "2018-05-26T14:24:11+09:00"
 
 # Patrick Yu
 
-> A question not asked is a door not opened.
+{{% quote quote %}}
+A question not asked is a door not opened.
+{{% /quote %}}
 
 이것저것 관심만 많은 **잡식성 개발자**입니다.
 

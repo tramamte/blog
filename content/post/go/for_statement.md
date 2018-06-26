@@ -62,3 +62,25 @@ graph LR;
     C-->D;
 {{< /mermaid >}}
 
+{{% quote %}}
+
+*hello*
+
+{{% /quote %}}
+
+
+
+{{% quote "warn" %}}
+
+*hello*
+
+{{% /quote %}}
+
+
+
+{{% quote "note" %}}
+
+*hello*
+
+{{% /quote %}}
+

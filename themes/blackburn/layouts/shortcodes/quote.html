@@ -1,0 +1,18 @@
+{{ if .Inner }}
+{{ $category := index .Params 0 }}
+{{ if $category }}
+{{ if eq $category "note" }}
+<blockquote class="note">
+{{ else if eq $category "warn" }}
+<blockquote class="warn">
+{{ else if eq $category "quote" }}
+<blockquote class="quote">
+{{ else }}
+<blockquote>
+{{ end }}
+{{ else }}
+<blockquote>
+{{ end }}
+{{ .Inner }}
+</blockquote>
+{{ end }}

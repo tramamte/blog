@@ -1,6 +1,7 @@
 {{ if .Inner }}
-{{ if .Get 0 }}
-<div class="box" style="background:{{ .Get 0 }};">
+{{ $bg := .Get 0 }}
+{{ if $bg }}
+<div class="box" style="background:{{ $bg }};">
 {{ else }}
 <div class="box">
 {{ end }}
