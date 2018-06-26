@@ -1,0 +1,8 @@
+{{ if .Inner }}
+{{ $uid := print "diagram" now.UnixNano }}
+<div id="{{ $uid }}"></div>
+<script>
+  var dgram = flowchart.parse("{{ .Inner }}");
+  dgram.drawSVG("{{ $uid }}");
+</script>
+{{ end }}
