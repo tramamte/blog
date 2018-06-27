@@ -23,9 +23,9 @@ enableEmoji = true
   topic = "topics"
   tag = "tags"
 
-[indexes]
-  topic = "topics"
-  tag = "tags"
+#[indexes]
+#  topic = "topics"
+#  tag = "tags"
 
 [params]
   subtitle = "Patrick's ramblings"
@@ -47,13 +47,13 @@ enableEmoji = true
     name = "Topics"
     pre = "<i class='fa fa-folder fa-fw'></i>"
     weight = 2
-    identifier = "topic"
+    identifier = "topics"
     url = "/topics/"
   [[menu.main]]
     name = "Tags"
     pre = "<i class='fa fa-tag fa-fw'></i>"
     weight = 3
-    identifier = "tag"
+    identifier = "tags"
     url = "/tags/"
   [[menu.main]]
     name = "Posts"
