@@ -8,30 +8,13 @@ date = "2018-06-27T00:00:08+09:00"
 draft = true
 +++
 
-Title
-: title is
+# heading 1
 
-[This is link][1]
+## heading 2
 
-1. [x] action a
-2. [ ] action b
+### heading 3
 
-dfdf
+#### heading 4
 
+##### heading 5
 
-~~abc~~
-
-: heart :
-
-name  |   age
-----------|--------
-bob     | 13
-alice    | 12
-
-
-
-12 -- 31
-
-
-
-5/12
