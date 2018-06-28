@@ -11,7 +11,7 @@ hasCJKLanguage = true
 # Server-side Chroma syntax highlighting
 pygmentsCodefences = true
 pygmentsUseClassic = false
-pygmentsStyle = "monokai"
+pygmentsStyle = "monokailight"
 pygmentsCodefencesGuessSyntax = true
 #pygmentsOptions = "linenos=table"
 enableEmoji = true
