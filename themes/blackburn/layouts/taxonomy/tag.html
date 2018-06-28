@@ -1,8 +1,8 @@
 {{ partial "header.html" . }}
 
 <div class="header">
-  <h1>{{ .Title }}</h1>
-  <h2>Tag: {{ lower .Title }}</h2>
+  <h1>{{ .Data.Term }}</h1>
+  <h2>Tag: {{ .Data.Term }}</h2>
 </div>
 
 <div class="content">
