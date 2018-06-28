@@ -1,0 +1,11 @@
+{{ $related := .Site.RegularPages.Related . | first 5 }}
+{{ with $related }}
+<div class="see-also">
+<p><i class="fa fa-archive fa-fw"></i><b>See Also</b></p>
+<ul>
+	{{ range . }}
+	<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+	{{ end }}
+</ul>
+</div>
+{{ end }}
