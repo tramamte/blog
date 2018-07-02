@@ -8,6 +8,7 @@ copyright = "&copy2018 Patrick Yu. All rights reserved."
 canonifyurls = true
 paginate = 5
 hasCJKLanguage = true
+
 # Server-side Chroma syntax highlighting
 pygmentsCodefences = true
 pygmentsUseClassic = false
