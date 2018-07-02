@@ -8,9 +8,7 @@ date = "2018-07-01T11:39:21+09:00"
 draft = true
 +++
 
-> # h1
+\\( {n \choose k} \\)
 
-  dfadf
-
-> #### h4
+$$ a = b $$ Good
 
