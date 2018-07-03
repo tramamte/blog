@@ -1,0 +1,207 @@
++++
+title = "정수형 상수의 내부 처리"
+description = "정수형 상수를 Go 언어 내부에서 처리하는 방법"
+topics = ["go"]
+tags = ["fun-go"]
+slug = "deep-inside-constants"
+date = "2018-07-03T16:12:19+09:00"
+draft = true
++++
+
+{{% box "#ffcccc" %}}
+
+이 글은 최신 Commit ID가 4ba55273713bebfbfe0bed9ce196e845c0c69567인 Go 소스 코드를 기준으로 합니다. 함수명, 변수/상수명, 변수/상수값 등은 Commit ID에 따라 다를 수 있습니다.
+
+최신 Go 소스 코드는 [Go Google Git Site](https://go.googlesource.com/go)에서 확인할 수 있습니다.
+
+{{% /box %}}
+
+별 것 없을 것 같은 상수의 별 것 포스트에서 [숙제]({{< ref "20180607-18-32.md#상수의-타입과-한계" >}})로 남겨 둔 정수형 상수를 Go 내부에서 처리하는 방법을 구체적으로 확인해 보자.
+
+아직 함수, 구조체 등 다루지 않은 것 투성이지만 대략의 처리 방법을 이해하는데는 무리가 없을 것이라 예상한다.
+
+확인을 위해 작성한 코드는 다음과 같다.
+
+{{< highlight go "linenos=table" >}}
+pacakge main
+
+func main() {
+  const i1 = 14345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345
+  const i2 = 2 << 512
+  const i3 = 2 << 511
+}
+{{< /highlight >}}
+
+이 코드를 빌드하면 다음과 같은 오류가 발생한다.
+
+```
+./main.go:4:14: constant too large: 14345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345
+./main.go:5:16: shift count too large: 512
+./main.go:6:16: constant shift overflow
+```
+
+\\(2^{512} \simeq 1.34 \times 10^{154} \\)이다. 즉, 13 뒤에 0이 153개 붙는 수이다. 이를 기준으로,
+
+- `i1`은 이 값보다 약간 크게 --- 14 뒤에 0이 153개 붙은 수
+- `i2`는 \\(2^{513}\\)
+- `i3`는 \\(2^{512}\\)
+
+로 각각 할당했다. 값의 기준은 차치하고, 모두 오류가 발생하는 것으로 보아 타입을 지정하지 않은 정수형 상수도 저장할 수 있는 한계가 있다는 것을 알 수 있다.
+
+# 순수 literal 상수의 한계 처리
+
+이제 Go 컴파일러의 소스 코드로 들어가 보자. 앞에서의 복잡한 처리는 무시하고,  go/src/cmd/compile/internal/gc/noder.go 부터 보면 될 것 같다. 이 파일에는 `expr()`이라는 함수가 있는데, `i1`을 처리하는 부분의 코드는 다음과 같다.
+
+```go
+// noder.go
+
+func (p *noder) expr(expr syntax.Expr) *Node {
+  ...
+  case *syntax.BasicLit:
+    return p.setlineno(expr, nodlit(p.basicLit(expr)))
+  ...
+}
+```
+
+여기서 호출하고 있는 `basicLit()`은 다음과 같다.
+
+```go
+// noder.go
+
+func (p *noder) basicLit(lit *syntax.BasicLit) Val {
+  ...
+  case syntax.IntLit:
+    x := new(Mpint)
+    x.SetString(s)
+    return Val{U: x}
+  ...
+}
+```
+
+`Mpint`는 go/src/cmd/compile/internal/gc/mpint.go에 다음과 같이 정의돼 있다.
+
+```go
+// mpint.go
+
+// Mpint represents an integer constant.
+type Mpint struct {
+	Val  big.Int
+	Ovf  bool // set if Val overflowed compiler limit (sticky)
+	Rune bool // set if syntax indicates default type rune
+}
+```
+
+다른 언어에서도 주로 사용하는 용어인 BigInt나 MPInt (Multi Precision Integer)는 주로 암호화나 인증 등 처리를 위해 기본 타입보다 큰 수가 필요할 때 사용할 수 있도록 구현한 것인데, Go에서는 math/big 경로에 big이라는 패키지를 제공하고 있고, Mpint는 big.Int를 포함하는 Go 언어 내부 구조체이다.
+
+다시 `basicLit()` 함수를 보면, 우선 Mpint를 만든 뒤에 `SetString()` 함수를 이용해 값을 할당하고 있다.
+
+```go
+// mpint.go
+
+func (a *Mpint) SetString(as string) {
+	_, ok := a.Val.SetString(as, 0)
+	if !ok {
+		// required syntax is [+-][0[x]]d*
+		// At the moment we lose precise error cause;
+		// the old code distinguished between:
+		// - malformed hex constant
+		// - malformed octal constant
+		// - malformed decimal constant
+		// TODO(gri) use different conversion function
+		yyerror("malformed integer constant: %s", as)
+		a.Val.SetUint64(0)
+		return
+	}
+	if a.checkOverflow(0) {
+		yyerror("constant too large: %s", as)
+	}
+}
+```
+
+드디어 빌드 시 발생한 오류에서 보였던 문구 "constant too large"가 나왔다. `SetString()` 함수에서는 일단 big.Int에 문자열 --- 소스 코드는 이 단계에서는 다 문자열로 처리된다. --- 을 이용해 값을 할당하고, `checkOverflow()` 함수를 호출해 값이 한계를 넘었는지 검사한다.
+
+```go
+// mpint.go
+
+func (a *Mpint) checkOverflow(extra int) bool {
+	// We don't need to be precise here, any reasonable upper limit would do.
+	// For now, use existing limit so we pass all the tests unchanged.
+	if a.Val.BitLen()+extra > Mpprec {
+		a.SetOverflow()
+	}
+	return a.Ovf
+}
+```
+
+`checkOverflow()` 함수에서는 big.Int의 값이 사용하는 비트수 `BitLen()`과 함수의 인자로 전달된 `extra`의 합계가 `Mpprec` 보다 크면 한계를 벗어난 것으로 처리한다. 그리고 한계를 벗어난 경우는 위 `SetString()` 함수에서 "constant too large: 1434~"를 출력한다. `extra`는 0으로 넘어왔으니 이제 `Mpprec`만 남았다. 끝이 보인다.
+
+```go
+// mpfloat.go
+
+const (
+	// Maximum size in bits for Mpints before signalling
+	// overflow and also mantissa precision for Mpflts.
+	Mpprec = 512
+	// Turn on for constant arithmetic debugging output.
+	Mpdebug = false
+)
+```
+
+`Mpprec`의 값은 512이다. 즉, **512개의 비트로 표시할 수 있는 수의 최대값이 타입을 지정하지 않은 정수형 상수의 한계**이다.
+
+# 비트 시프트를 이용한 상수의 한계 처리
+
+이제 `i2`와 `i3`에 대해 알아보자. 다시 noder.go의 `expr()` 함수로 돌아가 `i2`, `i3`에 대해 처리하는 부분의 코드를 보면 다음과 같다.
+
+```go
+// noder.go
+
+func (p *noder) expr(expr syntax.Expr) *Node {
+  ...
+  case *syntax.Operation:
+    ...
+    x := p.expr(expr.X)
+    ...
+    return p.nod(expr, p.binOp(expr.Op), x, p.expr(expr.Y))
+  ...
+}
+```
+대강의 동작은 다음과 같다.
+
+1. `expr.X`에는 "2", `expr.Y`에는 "511" 또는 "512"가 저장돼 있다.
+2. `expr()` 함수 재귀호출을 통해 `expr.X`, `expr.Y`를 처리하는데 모두 [순수 literal 상수의 한계 처리](#순수-literal-상수의-한계-처리)에서와 동일한 절차를 거쳐 `Mpint`로 변환된다. 즉, 2, 511, 512 모두 크기와 관계없이 `Mpint`가 된다.
+
+호출하는 부분은 건너뛰고, 연산자 --- <<; left shift --- 와 두 개의 피연산자 --- `Mpint` 형태의 2, 511 또는 512 --- 가 준비됐으니 계산하는 코드를 살펴보자.
+
+{{< highlight go "linenos=table, hl_lines=6  16" >}}
+// mpint.go
+
+func (a *Mpint) Lsh(b *Mpint) {
+  ...
+	s := b.Int64()
+	if s < 0 || s >= Mpprec {
+		msg := "shift count too large"
+		if s < 0 {
+			msg = "invalid negative shift count"
+		}
+		yyerror("%s: %d", msg, s)
+		a.SetInt64(0)
+		return
+	}
+
+	if a.checkOverflow(int(s)) {
+		yyerror("constant shift overflow")
+		return
+	}
+	a.Val.Lsh(&a.Val, uint(s))
+}
+{{< /highlight >}}
+
+`i2`를 보자. `a`는 2, `b`는 512이다. 5라인에서 `s`에 512를 넣고 6라인의 조건 ---  `s >= Mpprec` --- 에 의해 "shift count too large"가 출력된다.
+
+반면 `i3`는 `b`가 511이므로 6라인은 넘어가지만 16라인에서 `checkOverflow()` 함수의 인자로 511이 넘어가고 `a`의 비트수가 2이므로 ---  `a`는 2이므로 2진수로 표현하면 0b10 이다. --- overflow 처리돼 "constant shift overflow" 오류가 출력된다.
+
+# 결론
+
+이상에서 살펴본 바와 같이 Go의 타입을 지정하지 않은 정수형 상수는 최대값이 512개의 비트로 표현할 수 있는 최대값이다. big.Int에서 부호는 별도의 멤버로 관리하므로 \\(2^{512} - 1\\)이 최대값이다.
+
