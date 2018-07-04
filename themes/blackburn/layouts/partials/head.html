@@ -32,15 +32,32 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700|Nanum+Gothic+Coding:400,700|Raleway:400,700|Roboto+Mono" rel="stylesheet">
 
-  <!-- Image Zoom -->
+
+  <!-- Optional Imports -->
+
+  {{ if .Params.imports }}
+    {{ range $key, $val := .Params.imports }}
+      {{ if eq $val "math" }}
+  <!-- MathJax -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+      {{ else if eq $val "zimg" }}
+  <!-- Zoomable Image -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="/css/zoom.css">
   <script src="/js/zoom.js"></script>
-
-  <!-- MathJax -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
-
+      {{ else if eq $val "flowchart"}}
+  <!-- Flowchart -->
+  <script src="/js/raphael.min.js"></script>
+  <script src="/js/flowchart.min.js"></script>
+      {{ else if eq $val "sequence"}}
+  <!-- Sequence Diagram -->
+  <link rel="stylesheet" href="/css/sequence-diagram-min.css">
+  <script src="/js/webfont.js"></script>
+  <script src="/js/snap.svg-min.js"></script>
+  <script src="/js/underscore-min.js"></script>
+  <script src="/js/sequence-diagram-min.js"></script>
+      {{ else if eq $val "mermaid" }}
   <!-- Mermaid -->
   <script src="https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js" onload="mermaidReady()" defer></script>
   <script>
@@ -52,6 +69,12 @@
       mermaid.initialize(config);
     };
   </script>
+      {{ end}}
+    {{ end }}
+  {{ end }}
+
+  <!-- Optional Imports End -->
+
 
   <!-- RSS -->
   {{ if .RSSLink }}

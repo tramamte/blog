@@ -1,8 +1,10 @@
 +++
-title = "{{ replace .TranslationBaseName "-" " " | title }}"
+title = ""
 description = ""
+topics = [""]
+tags = [""]
+slug = {{ $fname := lower .TranslationBaseName }}"{{ replace $fname "_" "-" }}"
 date = "{{ .Date }}"
-topics = []
-tags = []
+imports = ["math", "zimg", "flowchart", "sequence", "mermaid"]
 draft = true
 +++

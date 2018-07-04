@@ -1,3 +1,5 @@
-<div class="mermaid" align="{{ if .Get "align" }}{{ .Get "align" }}{{ else }}center{{ end }}">
+{{ if .Inner  }}
+<div class="mermaid" align="{{ if .Get "align" }}{{ .Get "align" }}{{ else }}left{{ end }}">
   {{ safeHTML .Inner  }}
 </div>
+{{ end }}

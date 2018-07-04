@@ -1,0 +1,13 @@
+{{ if .Inner }}
+{{ $uid := string now.UnixNano }}
+<div class="sequence" id="sequence{{ $uid }}"
+  align="{{ if .Get "align" }}{{ .Get "align" }}{{ else }}left{{ end }}"></div>
+<script>
+  var seq = Diagram.parse("{{ safeHTML .Inner }}");
+  {{ if and (.Get "theme") (eq (.Get "theme") "hand") }}
+  seq.drawSVG('sequence{{ $uid }}', {theme: 'hand'});
+  {{ else }}
+  seq.drawSVG('sequence{{ $uid }}', {theme: 'simple'});
+  {{ end }}
+</script>
+{{ end }}

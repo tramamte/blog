@@ -1,0 +1,9 @@
+{{ if .Inner }}
+{{ $uid := string now.UnixNano }}
+<div class="flowchart" id="flowchart{{ $uid }}"
+  align="{{ if .Get "align" }}{{ .Get "align" }}{{ else }}left{{ end }}"></div>
+<script>
+  var flow = flowchart.parse("{{ safeHTML .Inner }}");
+  flow.drawSVG('flowchart{{ $uid }}');
+</script>
+{{ end }}
