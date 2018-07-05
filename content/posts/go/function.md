@@ -36,3 +36,16 @@ func testFunction() {
 }
 ```
 
+호출 방법은 다음과 같다.
+
+```go
+testFunction()
+```
+
+FunctionDecl을 보면 Signature 뒤에 FunctionBody는 생략할 수 있는데, 다음과 같은 형태가 된다.
+
+```go
+func testFunction()
+```
+
+마치 C의 함수 프로토타입과 비슷해 보이는데, 
