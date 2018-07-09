@@ -48,4 +48,5 @@ FunctionDecl을 보면 Signature 뒤에 FunctionBody는 생략할 수 있는데,
 func testFunction()
 ```
 
-마치 C의 함수 프로토타입과 비슷해 보이는데, 
+마치 C의 함수 프로토타입과 비슷해 보이는데, 비슷하면서도 다른 기능을 한다.
+
