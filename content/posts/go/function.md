@@ -4,12 +4,12 @@ description = "Function"
 topics = ["go"]
 tags = ["syntax-go"]
 slug = "function"
-date = "2018-07-04T12:39:21+09:00"
+date = "2018-07-09T12:50:21+09:00"
 imports = [""]
 draft = true
 +++
 
-함수를 타입으로 사용하는 등 여러가지 용법이 있지만 기본적인 함수의 선언(declaration)과 정의(definition)에 대해서만 다루도록 하겠다. 
+함수를 타입으로 사용하는 등 여러가지 용법이 있지만 기본적인 함수의 선언(declaration)과 정의(definition)에 대해서만 우선 다루도록 하겠다. 
 
 함수 작성 규칙은 다음과 같다.
 
@@ -24,7 +24,7 @@ ParameterList  = ParameterDecl { "," ParameterDecl } .
 ParameterDecl  = [ IdentifierList ] [ "..." ] Type .
 ```
 
-매우 복잡해 보이는데 하나하나 예외를 제거하고, 예제를 통해 알아보자.
+매우 복잡해 보이는데 하나하나 예제를 통해 알아보자.
 
 # 함수의 기본형
 
@@ -42,6 +42,8 @@ func testFunction() {
 testFunction()
 ```
 
+# 정의가 없는 함수 선언
+
 FunctionDecl을 보면 Signature 뒤에 FunctionBody는 생략할 수 있는데, 다음과 같은 형태가 된다.
 
 ```go
@@ -49,4 +51,190 @@ func testFunction()
 ```
 
 마치 C의 함수 프로토타입과 비슷해 보이는데, 비슷하면서도 다른 기능을 한다.
+
+C의 함수는 미리 선언이 돼 있어야 호출이 가능하다. gcc에서는 일단 컴파일, 링크가 되기는 하지만 C99 표준에서는 어쨌든 함수를 선언 전 호출하는 implicit declaration이 원칙적으로 오류이다. 하지만 Go에서는 이런 제한은 없다. 따라서 함수 선언 전 호출하는 것은 아무런 문제가 없으며, 심지어 패키지 이름이 같다면 호출되는 함수가 다른 파일에 정의돼 있어도 문제없이 작동한다. 따라서 이 용도는 아니다.
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	testFunc()
+}
+
+func testFunc() {
+	fmt.Println("This is testFunc.")
+}
+```
+
+```go
+// file1.go
+package main
+
+func main() {
+	testFunc()
+}
+
+// file2.go
+package main
+
+import "fmt"
+
+func testFunc() {
+	fmt.Println("This is testFunc.")
+}
+```
+
+C에서 함수 프로토타입은 함수를 정의한 파일을 분리하기 위해서도 사용한다. 내부적인 의미야 위 호출되는 함수를 나중에 정의하는 경우와 같은데, 컴파일러에게 해당 함수가 어딘가에 정의돼 있으니 우선 프로토타입을 참고해 컴파일하고 넘어가라고 알려주는 것이다.
+
+```c
+// file1.c
+void testFunc();
+
+int main()
+{
+	testFunc();
+	return 0;
+}
+
+// file2.c
+#include <stdio.h>
+
+viod testFunc()
+{
+	printf("This is testFunc.\n");
+}
+```
+
+Go에서는 파일을 분리해 함수를 정의하는 것도 제한이 없다고 했으니 이 용도와도 정확히 일치하지는 않지만, '함수가 어딘가에 정의돼 있다'는 정보를 알려준다는 점은 유사하다. 
+
+FunctionBody를 생략하고 함수를 선언하는 경우는 어셈블리와 같이 Go가 아닌 언어로 정의한 함수를 호출하기 위해 함수의 형태(signature)를 알려주는 용도이다.
+
+# 전달 인수(Parameter)가 있는 함수
+
+함수에 인수를 전달하기 위해서는 함수명 뒤 괄호 안에 전달할 인수를 기입하면 된다. 인수는 comma(,)로 구분해 복수개를 전달할 수 있다.
+
+## 인수 전달 기본형
+
+인수는 변수를 선언할 때처럼 변수명 뒤에 타입을 적는다.
+
+```go
+func paramFunc(param1 int, param2 string) {
+	...
+}
+```
+
+## 타입이 같은 인수들
+
+타입이 같은 인수들을 전달하는 경우 인수명만 comma(,)로 구분해 기입하고 타입은 마지막 인수 뒤에 붙일 수 있다.
+
+```go
+func paramFunc(param1, param2, param3 int) {
+	...
+}
+```
+
+## 가변 인수(Variable argument)
+
+Go에서도 가변 인수 전달이 가능하다. ParameterDecl을 보면 `[ IdentifierList ][ "..." ] Type .` 이렇게 정의돼 있는데 바로 `...`이 가변 인수를 전달하는 방법이다.
+
+```go
+func vparamFunc(params ... int) {
+	...
+}
+```
+
+ParameterList가 ParameterDecl을 comma(,)로 구분해 붙인 형태라 언뜻 생각하면 다음과 같은 방식도 가능해 보인다.
+
+```go
+func vparamFunc(intParams ... int, strParams ... string) {
+	...
+}
+```
+
+하지만 가변 인수는 함수의 마지막 인수로만 사용할 수 있어 위 함수는 다음과 같은 오류가 발생한다.
+
+```
+can only use ... with final parameter in list
+```
+
+# 반환값(Return value)이 있는 함수
+
+함수는 처리 결과를 반환할 수 있다. Go의 함수가 C/C++이나 Java의 함수와 가장 크게 구분되는 점이 바로 이 반환값에 대한 처리 방식일 것이다.
+
+## 반환값 기본형
+
+함수의 반환값은 인수 전달을 위한 괄호(())와 함수 정의를 위한 중괄호({}) 사이에 타입을 쓴다. 결과를 반환하기 위해서는 `return` 키워드를 사용한다.
+
+```go
+func returnFunc() int {
+	...
+	return 0
+}
+```
+
+## 복수개의 반환값
+
+:astonished: 어마어마하지 않은가? Go는 무려 복수개의 값을 반환할 수 있다. 반환값 목록을 괄호(())로 묶어 반환값 타입들을 열거하면 된다.
+
+```go
+func returnFunc() (int, string) {
+	...
+	return 1, "hello"
+}
+```
+
+Go를 사용하는한 아래와 같은 코드와는 영영 결별할 수 있다.
+
+```c
+/* c code */
+
+#define OUT
+
+int twoReturnFunc(OUT int *secondOut);
+```
+
+## 이름을 갖는 반환값
+
+이런 코드를 자주 작성하는가?
+
+```c
+int intReturnFunc()
+{
+	int ret = 0;
+	...
+	ret = 1;
+	...
+	return ret;
+}
+```
+
+ Go는 반환을 위해 별도 변수를 선언할 필요없이 함수 선언 시 반환값에 이름을 지정할 수도 있다.
+
+```go
+func intReturnFunc() (ret int) {
+	...
+	ret = 1
+	...
+	return ret
+}
+```
+
+{{% quote warn %}}
+
+반환값에 이름을 지정하기 위해서는 반환값이 하나인 경우에도 반드시 괄호(())로 묶어야 한다. 함수 작성 규칙을 다시 보면 Result는 Parameters이거나 Type이 와야 하는데, 반환값에 이름을 붙이는 용법은 Parameters를 쓴 경우에 해당한다.
+
+{{% /quote %}}
+
+위 예는 이미 반환값이 `ret`라는 것을 함수도 알고 있기 때문에 `return` 키워드 뒤에 `ret`를 붙이지 않고도 쓸 수 있다.
+
+```go
+func intReturnFunc() (ret int) {
+	...
+	ret = 1
+	...
+	return
+}
+```
 
