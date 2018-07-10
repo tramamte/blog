@@ -1,0 +1,403 @@
++++
+title = "특이한 함수들"
+description = "역할이 정해진 특수 목적의 함수들, main과 init"
+topics = ["go"]
+tags = ["fun-go"]
+slug = "init-and-main"
+date = "2018-07-10T10:58:25+09:00"
+imports = ["mermaid"]
+draft = true
++++
+
+{{% box %}}
+
+본문 중 심볼(symbol)에 대한 내용은 편의상 리눅스 환경에서 빌드한 바이너리를 readelf 명령으로 확인한 결과를 기준으로 합니다. 
+
+{{% /box %}}
+
+C/C++, Java에서 가장 특이한 함수는 누가 뭐래도 프로세스의 시작점(entry point)이 되는 `main()` 함수일 것이다. 이 함수는 프로세스 시작 시점에 자동으로 호출되며, 소스 코드 내에서 별도로 호출하지 않는다. Go 역시 `main()` 함수가 시작점이다. 그런데 왜 글 제목이 **함수들**인가? 이제부터 확인해 보자.
+
+> 기억할지 모르겠지만 [임포트]({{< ref "20180608-18-58" >}})에서 말미에 숙제로 남겨둔 것이 하나 있다. 바로 blank identifier를 별칭으로 사용해 패키지를 임포트하는 것이다. 드디어 숙제를 할 때가 됐다.
+
+---
+
+우선 간단한 Go 프로그램을 하나 작성해 보자.
+
+```go
+package main
+
+func main() {
+	var i int = 0
+	i = i + 1
+}
+```
+
+가장 간단한 형태를 만들기 위해서 fmt 패키지도 임포트하지 않았다. 이제 이 소스 코드를 빌드해 실행 바이너리 파일---여기서는 test---을 만들어 심볼을 확인해 보자.
+
+```sh
+$ readelf -s test
+...
+  1269: 000000000044c150     1 FUNC    GLOBAL DEFAULT    1 main.main
+  1270: 000000000044c160    79 FUNC    GLOBAL DEFAULT    1 main.init
+```
+
+main 패키지에 포함된 main 함수 심볼이 보이고, init 이라는 함수 심볼도 보인다. 바로 이 **init 함수**가 이 글의 주제이며 main 함수와 함께 **특이한 함수들**이라 복수형 표현이 가능하게 하는 주인공이다.
+
+# init() 함수 정의
+
+프로세스 당 하나만 유효한 `main()` 함수와는 달리 `init()` 함수는 패키지마다 정의할 수 있으며, 초기화를 위한 수단으로 사용한다. `main()` 함수와 동일하게 인수와 반환값이 없는 형태(signature)를 가져야 한다.
+
+```go
+func init() {
+	...
+}
+```
+
+위 간단한 예에서는 별도로 `init()` 함수를 정의하지 않았지만 심볼이 있는 것으로 보아 Go가 자동으로 함수를 추가한 것을 알 수 있다.
+
+# main()과 init()의 호출 순서
+
+호출 순서를 알아보기 위해 소스 코드를 다음과 같이 수정해 실행해 보자.
+
+```go
+package main
+
+import "fmt"
+
+func init() {
+	fmt.Println("This is init()")
+}
+
+func main() {
+	fmt.Println("This is main()")
+}
+```
+
+```
+This is init()
+This is main()
+```
+
+`init()`이 `main()`보다 먼저 호출된다. `init()`이 패키지를 초기화하기 위한 함수이고, main도 패키지이니 당연한 결과이다.
+
+# 명시적으로 정의한 init() 함수
+
+위에서 호출 순서를 확인하기 위해 `init()` 함수를 정의했으니 이 경우의 심볼도 한 번 확인해 보자.
+
+```sh
+$ readelf -s test
+...
+  3072: 0000000000482070   110 FUNC    GLOBAL DEFAULT    1 main.init.0
+  3073: 00000000004820e0   110 FUNC    GLOBAL DEFAULT    1 main.main
+  3074: 0000000000482150    96 FUNC    GLOBAL DEFAULT    1 main.init
+```
+
+`init()` 함수를 정의하지 않은 경우에 Go가 자동으로 삽입한 main.init을 덮어쓰지 않고, main.init.0이라는 심볼이 새로 생겼다. 그렇다면 혹시 1, 2, 3...?
+
+## 복수의 init() 함수들
+
+궁금하면 직접 해보는게 약이다.
+
+```go
+package main
+
+import "fmt"
+
+func init() {
+	fmt.Println("This is init() no. 1")
+}
+
+func init() {
+	fmt.Println("This is init() no. 2")
+}
+
+func init() {
+	fmt.Println("This is init() no. 3")
+}
+
+func main() {
+	fmt.Println("This is main()")
+}
+```
+
+```
+This is init() no. 1
+This is init() no. 2
+This is init() no. 3
+This is main()
+```
+
+**된다!**
+
+```sh
+$ readelf -s test
+...
+  3074: 0000000000482070   110 FUNC    GLOBAL DEFAULT    1 main.init.0
+  3075: 00000000004820e0   110 FUNC    GLOBAL DEFAULT    1 main.init.1
+  3076: 0000000000482150   110 FUNC    GLOBAL DEFAULT    1 main.init.2
+  3077: 00000000004821c0   110 FUNC    GLOBAL DEFAULT    1 main.main
+  3078: 0000000000482230   106 FUNC    GLOBAL DEFAULT    1 main.init
+```
+
+예상한 것처럼 main.init. 뒤에 붙는 숫자가 각 `init()` 함수를 구분하기 위한 인덱스이다.
+
+## 여기저기 흩어진 init() 함수들
+
+하나의 패키지를 여러 파일들에 분산해 만들 수 있으니, 이 경우의 `init()` 함수들 호출에 대해서도 확인해 보자.
+
+```go
+// test.go
+package main
+
+import "fmt"
+
+func init() {
+	fmt.Println("This is init() in test.go")
+}
+
+func main() {
+	fmt.Println("This is main()")
+}
+
+// test1.go
+package main
+
+import "fmt"
+
+func init() {
+	fmt.Println("This is init() in test1.go")
+}
+
+// test2.go
+package main
+
+import "fmt"
+
+func init() {
+	fmt.Println("This is init() in test2.go")
+}
+```
+
+```
+This is init() in test.go
+This is init() in test1.go
+This is init() in test2.go
+This is main()
+```
+
+당연하게도 잘 실행된다.
+
+## init() 함수들의 호출 순서
+
+여기까지 왔으면 반드시 가져야 하는 의문점 하나.
+
+> `init()` 함수들을 모두 호출해 주는 것은 좋은데, 호출 순서를 정하는 규칙이 뭐지?
+
+위 [여기저기 흩어진 init() 함수들](#여기저기-흩어진-init()-함수들) 예에서 test1.go 파일의 이름만 test3.go로 변경해 보자. 출력하는 내용은 그대로 "This is init() in test1.go"로 두고 단순히 파일 이름만 변경하는 것이다.
+
+```
+This is init() in test.go
+This is init() in test2.go
+This is init() in test1.go
+This is main()
+```
+
+호출 순서가 변경됐다. 복수의 `init()` 함수를 쓸 때 잘못하면 엄청난 일이 벌어지겠다는 느낌이 드는가?
+
+이쯤에서 [Go spec.](https://golang.org/ref/spec#Package_initialization)의 관련 내용을 확인해 보자.
+
+{{% quote quote %}}
+
+A package with no imports is initialized by assigning initial values to all its package-level variables followed by calling all `init` functions in the order they appear in the source, possibly in multiple files, as presented to the compiler.
+
+...
+
+To ensure reproducible initialization behavior, build systems are encouraged to present multiple files belonging to the same package in lexical file name order to a compiler. 
+
+{{% /quote %}}
+
+요약하자면, `init()` 함수는 한 소스 파일 안에서는 정의한 순서대로, 여러 파일에 나뉘어 있는 경우에는 파일명 정렬 순서대로 호출된다.
+
+# 임포트한 패키지의 init() 함수
+
+이제 `init()` 함수를 갖는 패키지를 만들어 main 패키지에서 임포트해보자. 다음과 같이 작성했다.
+
+```go
+// packa/packa.go
+package packa
+
+import "fmt"
+
+func init() {
+	fmt.Println("This is packa.init()")
+}
+
+func TestFunc() {
+	fmt.Println("This is packa.TestFunc()")
+}
+
+
+// packb/packb.go
+package packb
+
+import "fmt"
+
+func init() {
+	fmt.Println("This is packb.init()")
+}
+
+func TestFunc() {
+	fmt.Println("This is packb.TestFunc()")
+}
+
+
+// main.go
+package main
+
+import (
+	"fmt"
+	"packa"
+	"packb"
+)
+
+func init() {
+	fmt.Println("This is main.init()")
+}
+
+func main() {
+	fmt.Println("This is main.main()")
+	packa.TestFunc()
+	packb.TestFunc()
+}
+```
+
+```
+This is packa.init()
+This is packb.init()
+This is main.init()
+This is main.main()
+This is packa.TestFunc()
+This is packb.TestFunc()
+```
+
+main 패키지의 `init()` 함수 호출 전, 임포트한 순서대로 각 패키지의 `init()` 함수가 호출되는 것을 알 수 있다.
+
+## 임포트한 패키지에서 임포트한 패키지
+
+위 예에서 packb 패키지를 main 패키지가 아닌 packa 패키지에서 임포트하면 어떻게 될까?
+
+```go
+// packa/packa.go
+package packa
+
+import (
+	"fmt"
+	"packb"
+)
+
+func init() {
+	fmt.Println("This is packa.init()")
+}
+
+func TestFunc() {
+	fmt.Println("This is packa.TestFunc()")
+	packb.TestFunc()
+}
+
+
+// main.go
+package main
+
+import (
+	"fmt"
+	"packa"
+)
+
+func init() {
+	fmt.Println("This is main.init()")
+}
+
+func main() {
+	fmt.Println("This is main.main()")
+	packa.TestFunc()
+}
+```
+
+```
+This is packb.init()
+This is packa.init()
+This is main.init()
+This is main.main()
+This is packa.TestFunc()
+This is packb.TestFunc()
+```
+
+쉽게 예상할 수 있는 것처럼, 일단 임포트 스택의 바닥까지 내려가 하나하나 올라오며 순차적으로 호출되는 것을 확인할 수 있다.
+
+## 중복 임포트한 패키지
+
+하나의 소스 파일에서 동일 패키지를 중복 임포트하는 경우야 거의 없겠지만, 위 예를 가정하면, packb 패키지를 packa 패키지에서 임포트하고, main 패키지에서도 임포트하는 경우는 얼마든지 발생할 수 있다. 이미 fmt 패키지를 그렇게 사용하고 있지 않은가.
+
+{{< mermaid >}}
+graph LR
+	packb -- import --> packa
+	packa -- import --> main
+	packb -- import --> main
+{{< /mermaid >}}
+
+확인을 위해 위 소스 코드의 main.go만 다음과 같이 수정했다.
+
+```go
+// main.go
+package main
+
+import (
+	"fmt"
+	"packa"
+	"packb"
+)
+
+func init() {
+	fmt.Println("This is main.init()")
+}
+
+func main() {
+	fmt.Println("This is main.main()")
+	packa.TestFunc()
+	packb.TestFunc()
+}
+```
+
+```
+This is packb.init()
+This is packa.init()
+This is main.init()
+This is main.main()
+This is packa.TestFunc()
+This is packb.TestFunc()
+This is packb.TestFunc()
+```
+
+다행히 packb 패키지의 `init()` 함수는 main 패키지에서 먼저 처리되는 packa 패키지 임포트 시 한 번 호출되고, main 패키지에서 다시 packb 패키지를 임포트해도 재호출되지 않는다.
+
+# 숙제의 답은?
+
+[Go spec.](https://golang.org/ref/spec#Package_initialization)에는 `init()` 함수에 대해 다음과 같은 설명이 있다.
+
+{{% quote quote %}}
+
+Package initialization—variable initialization and the invocation of `init` functions—happens in a single goroutine, sequentially, one package at a time. An `init` function may launch other goroutines, which can run concurrently with the initialization code. However, initialization always sequences the `init` functions: it will not invoke the next one until the previous one has returned. 
+
+{{% /quote %}}
+
+goroutine은 머나 먼 미래에 등장하겠지만 여기서는 thread 정도로 생각하면 되겠다. 
+
+이제 숙제를 해보자.
+
+{{% quote note %}}
+
+패키지의 이름을 정할 때는 blank identifier를 사용할 수 없지만, 외부 패키지를 임포트할 때 PackageName 자리에는 blank identifier를 사용할 수 있다. 이 경우에는 해당 패키지의 기능을 호출하지 않겠다는 의미이다. 
+
+{{% /quote %}}
+
+blank identifier로 별칭을 달아 패키지의 기능을 호출하지 않더라도 해당 패키지를 임포트함으로써 `init()` 함수를 호출할 수 있고, `init()` 함수를 어떻게 구현하느냐에 따라 해당 패키지는 외부에서의 별도 호출이 없더라도 알아서 작동하도록 할 수 있는 것이다.
