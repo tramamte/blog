@@ -52,37 +52,37 @@ toLower = false
   # Shown in the side menu.
   [[menu.main]]
     name = "Home"
-    pre = "<i class='fa fa-home fa-fw'></i>"
+    pre = "<i class='fas fa-home fa-fw'></i>"
     weight = 1
     identifier = "home"
     url = "/"
   [[menu.main]]
     name = "Topics"
-    pre = "<i class='fa fa-folder fa-fw'></i>"
+    pre = "<i class='fas fa-folder fa-fw'></i>"
     weight = 2
     identifier = "topics"
     url = "/topics/"
   [[menu.main]]
     name = "Tags"
-    pre = "<i class='fa fa-tag fa-fw'></i>"
+    pre = "<i class='fas fa-tag fa-fw'></i>"
     weight = 3
     identifier = "tags"
     url = "/tags/"
   [[menu.main]]
     name = "Posts"
-    pre = "<i class='fa fa-list fa-fw'></i>"
+    pre = "<i class='fas fa-list fa-fw'></i>"
     weight = 4
     identifier = "posts"
     url = "/posts/"
   [[menu.main]]
     name = "About"
-    pre = "<i class='fa fa-user fa-fw'></i>"
+    pre = "<i class='fas fa-user fa-fw'></i>"
     weight = 5
     identifier = "about"
     url = "/about/"
 #  [[menu.main]]
 #    name = "Contact"
-#    pre = "<i class='fa fa-phone fa-fw'></i>"
+#    pre = "<i class='fas fa-phone fa-fw'></i>"
 #    weight = 4
 #    url = "/contact/"
 
