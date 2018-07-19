@@ -13,7 +13,7 @@ PKI의 근간이 되는 RSA 암호화에 대해 중학교 수준의 수학만 �
 
 # 기반 지식
 
-오일러 파이[^1] 함수 (Euler's phi function 또는 Euler's totient function), 페르마 소정리 (Fermat's little theorem)와 이의 일반화 형태인 오일러 정리 (Euler's theorem)에 대해 딱 RSA를 이해하는데 필요한 수준만 간략히 알아보자. 
+오일러 파이[^1] 함수 (Euler's phi function 또는 Euler's totient function), 페르마 소정리 (Fermat's little theorem)와 이의 일반화 형태인 오일러 정리 (Euler's theorem)에 대해 딱 RSA를 이해하는데 필요한 정도만 간략히 알아보자.
 
 [^1]: 원주율을 표시할 때 사용하는 \\(\pi\\)와의 구분을 위해 ’피’라 읽기도 하는데 여기서는 ’파이’로 표기한다.
 
@@ -72,11 +72,11 @@ $$ a^p\,\bmod\,p = a\,\bmod\,p $$
 
 \\(a\\)가 0인 경우는 당연히 성립하며, \\(a \neq 0\\)인 경우 다음 식도 성립한다.
 
-$$ a^{(p-1)}\,\bmod\,p = 1\,\bmod\,p $$
+$$ a^{(p-1)}\,\bmod\,p = 1 $$
 
 {{% /box %}}
 
-우선 첫 번째 공식이 성립한다는 가정하에 두 번째 공식이 성립함을 확인해보자.
+우선 첫 번째 공식이 성립한다는 가정하에 두 번째 공식이 성립함을 알아보자.
 
 \\(a^p\\)와 \\(a\\)를 각각 \\(p\\)로 나눈 나머지가 같으므로 \\(r\\)을 나머지, \\(m\\), \\(n\\)을 임의의 정수라고 했을 때 \\(a^p\\), \\(a\\)는 다음과 같이 쓸 수 있다.
 
@@ -111,19 +111,19 @@ $$ a \equiv b \pmod{n} $$
 
 ## 오일러 정리 (Euler's theorem)
 
-오일러 정리는 페르마 소정리에 대한 일반 형태로 페르마 소정리에서의 소수 \\(p\\)를 일반 정수 \\(n\\)으로 확장한 형태이다.
+오일러 정리는 페르마 소정리에 대한 일반 형태로 페르마 소정리에서의 소수 \\(p\\)를 일반 정수 \\(n\\)으로 확장한 형태이다. 합동 산술 표기법으로 표현하면 \\(n\\)에 대한 조건이 완화되지만 RSA를 이해하는데는 문제가 없기 때문에 제한적 상황만 고려하자.
 
 {{% box "#ffeeff" %}}
 
-임의의 0보다 큰 정수 \\(a\\)와 \\(n\\)이 서로소일 때,
+임의의 0보다 큰 정수 \\(a\\)와 1보다 큰 정수 \\(n\\)이 서로소일 때,
 
-$$ a^{\varphi(n)}\,\bmod\,n = 1\,\bmod\,n $$
+$$ a^{\varphi(n)}\,\bmod\,n = 1 $$
 
 {{% /box %}}
 
 \\(n\\)이 소수인 경우 오일러 파이 함수의 첫 번째 특징에 의해  페르마 소정리의 두 번째 식과 같아진다.
 
-오일러 정리를 증명해보자.
+오일러 정리에 대한 증명은 다음과 같다.
 
 1부터 \\(n\\)까지의 정수 중 \\(n\\)과 서로소인 \\(\varphi(n)\\)개의 수들을 \\( r _ 1, \cdots, r _ {\varphi(n)} \\)라고 하면, 각각에 \\( a \\)를 곱한 \\( ar _ 1, \cdots, ar _ {\varphi(n)} \\) 역시 \\( n \\)과 서로소인 수들의 곱이므로 \\(n \\)과 서로소이다. 또, 이 수들을 \\( n \\)으로 나눈 나머지들을 모두 서로 다르다.
 
@@ -135,7 +135,7 @@ $$ a^{\varphi(n)}\,\bmod\,n = 1\,\bmod\,n $$
 
 $$ ar _ i = nq _ i + m _ i\ (1 \le i \le \varphi(n)) $$
 
-\\(n\\)으로 나눴을 때 몫이 \\(q_i\\), 나머지가 \\(m_i\\)라는 의미이다. 위에서 이미 나머지들은 모두 서로 다르다는 것을 밝혔으니 나머지의 경우의 수 역시 \\(\varphi(n)\\)가지이다. 그리고 \\(m _ i\\)들은 모두 \\(n\\)과 서로소이다.
+\\(n\\)으로 나눴을 때 몫이 \\(q_i\\), 나머지가 \\(m_i\\)라는 뜻이다. 위에서 이미 나머지들은 모두 서로 다르다는 것을 밝혔으니 나머지의 경우의 수 역시 \\(\varphi(n)\\)가지이다. 그리고 \\(m _ i\\)들은 모두 \\(n\\)과 서로소이다.
 
 왜냐하면,
 
@@ -149,13 +149,21 @@ $$ \begin{matrix} ar_i &=& nq_i + m_i \\\ &=& dkq_i + dl_i \\\ &=& d(kq_i + l_i)
 
 이제 \\(ar_i\\)들을 모두 곱하면,
 
-$$ \begin{matrix} ar _ 1 \times \cdots \times ar _ {\varphi(n)} \\\ = (nq _ 1 + m _ 1) \times \cdots \times (nq _ {\varphi(n)} + m _ {\varphi(n)}) \end{matrix} $$
+$$ ar _ 1 \times \cdots \times ar _ {\varphi(n)} $$
+
+$$ = (nq _ 1 + m _ 1) \times \cdots \times (nq _ {\varphi(n)} + m _ {\varphi(n)}) $$
 
 이 되는데, 이 식을 전개하면 모든 항에 \\(n\\)이 한 개 이상 포함되고, 마지막 항 \\(m _ 1 \times \cdots \times m _ {\varphi(n)}\\)만 \\(n\\)을 포함하지 않는다. 위에서 \\(m_i\\)는 순서만 바뀐 \\(r_i\\)와 같은 수들의 집합이라는 것을 밝혔으니 \\(n\\)이 포함되지 않은 마지막 항은 \\(r _ 1 \times \cdots \times r _ {\varphi(n)}\\)과 같다. 따라서 \\(ar_i\\)들을 모두 곱한 수를 \\(n\\)으로 나눈 나머지는 \\(r_i\\)들을 모두 곱한 수를 \\(n\\)으로 나눈 나머지와 같다.
 
-$$ \begin{matrix} ar _ 1 \times \cdots \times ar _ {\varphi(n)} \\\ = b _ 1 n ^ {\varphi(n)} + b _ 2 n ^ {\varphi(n) - 1} + \cdots + (m _ 1 \times \cdots \times m _ {\varphi(n)}) \\\ = b _ 1 n ^ {\varphi(n)} + b _ 2 n ^ {\varphi(n) - 1} + \cdots + (r _ 1 \times \cdots \times r _ {\varphi(n)}) \end{matrix} $$
+$$ ar _ 1 \times \cdots \times ar _ {\varphi(n)} $$
 
-$$ \begin{matrix} \therefore (ar _ 1 \times \cdots \times ar _ {\varphi(n)})\,\bmod\,n \\\ = (r _ 1 \times \cdots \times r _ {\varphi(n)})\,\bmod\,n \end{matrix} $$
+$$ = b _ 1 n ^ {\varphi(n)} + b _ 2 n ^ {\varphi(n) - 1} + \cdots + (m _ 1 \times \cdots \times m _ {\varphi(n)}) $$
+
+$$ = b _ 1 n ^ {\varphi(n)} + b _ 2 n ^ {\varphi(n) - 1} + \cdots + (r _ 1 \times \cdots \times r _ {\varphi(n)}) $$
+
+$$ \therefore (ar _ 1 \times \cdots \times ar _ {\varphi(n)})\,\bmod\,n $$
+
+$$ \quad = (r _ 1 \times \cdots \times r _ {\varphi(n)})\,\bmod\,n $$
 
 두 곱한 수를 \\(n\\)으로 나눴을 때 나머지가 같으므로 \\(ar_i\\)들의 곱에서 \\(r_i\\)들의 곱을 뺀 수는 \\(n\\)으로 나누어 떨어진다. 즉,
 
@@ -169,10 +177,18 @@ $$ (a ^ {\varphi(n)} - 1)\,\bmod\,n = 0 $$
 
 $$ \therefore a ^ {\varphi(n)}\,\bmod\,n = 1 $$
 
-지금까지는 \\(n\\)이 1보다 큰 경우만 가정했는데, 1인 경우도 고려하면 다음과 같다.
-
-$$ a ^ {\varphi(n)}\,\bmod\,n = 1\,\bmod\,n $$
 
 # 키 생성 절차
+
+RSA 키 생성 절차는 다음과 같다.
+
+1. 서로 다른 소수 \\(p\\), \\(q\\)를 고른다. 이 수들은 서로소이다.
+2. \\((p-1), (q-1)\\)과 각각 서로소인 \\(e\\)를 고른다.
+3. \\(ed\\)를 \\((p-1)(q-1)\\)로 나눴을 때 나머지가 1이 되는 \\(d\\)를 찾는다.
+4. \\(N = pq\\)를 구한다.
+5. \\((N, e)\\)가 공개키, \\((N, d)\\)가 개인키가 된다.
+
+RSA의 핵심은 \\(N\\)만 가지고는 \\(p, q\\)를 찾기 어렵고---소인수분해가 어렵고---, \\(p, q\\)를 모르는 상태에서는 \\(e\\)를 알아도 \\(d\\)를 특정할 수 없다는데 있다.
+
 
 # 암호화 및 복호화

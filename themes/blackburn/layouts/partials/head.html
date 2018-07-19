@@ -39,6 +39,13 @@
     {{ range $key, $val := .Params.imports }}
       {{ if eq $val "math" }}
   <!-- MathJax -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      jax: ["input/TeX","output/HTML-CSS"],
+	  displayAlign: "left",
+      displayIndent: "1em"
+    });
+  </script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
       {{ else if eq $val "zimg" }}
   <!-- Zoomable Image -->
