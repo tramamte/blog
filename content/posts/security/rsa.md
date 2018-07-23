@@ -1,19 +1,21 @@
 +++
 title = "중학교 수학으로 이해하는 RSA"
-description = "RSA 암호화의 이해"
+description = "RSA 암호화의 수학적 이해"
 topics = ["security"]
-tags = ["pki", "rsa", "cryptography"]
+tags = ["pki", "rsa"]
 slug = "rsa"
-date = "2018-07-17T16:20:45+09:00"
-imports = ["math"]
+date = "2018-07-23T00:00:00+09:00"
+imports = ["math", "sequence"]
 draft = true
 +++
 
-PKI의 근간이 되는 RSA 암호화에 대해 중학교 수준의 수학만 사용해 알아보자. 이해를 위해 필요한 기반 지식들 역시 최대한 간단히, 중학교 수준에서만 다룬다.
+중학교 수학으로 이해하는 시리즈 2탄으로 PKI(Public Key Infrastructure)의 근간이 되는 RSA(Ron Rivest, Adi Shamir, Leonard Adleman) 암호화에 대해 알아보자.
+
+RSA 암호화는 암호화/복호화에 서로 다른 키를 사용하는 대표적인 비대칭 키 암호화 알고리즘(asymmetric key cryptography algorithm) 중 하나이다. 앞서 [디피-헬만 키 교환]({{< ref "20180720-20-05" >}})에서 알아본 대칭 키 암호화 알고리즘은 키와 알고리즘이 서로 독립적인데 반해 비대칭 키 암호화 알고리즘은 키를 생성하는 과정과 암호화/복호화 과정이 유기적으로 연관돼 있어 상호 종속적이다.
 
 # 기반 지식
 
-오일러 파이[^1] 함수 (Euler's phi function 또는 Euler's totient function), 페르마 소정리 (Fermat's little theorem)와 이의 일반화 형태인 오일러 정리 (Euler's theorem)에 대해 딱 RSA를 이해하는데 필요한 정도만 간략히 알아보자.
+오일러 파이[^1] 함수 (Euler's phi function 또는 Euler's totient function), 페르마 소정리 (Fermat's little theorem)와 이의 일반화 형태인 오일러 정리 (Euler's theorem)에 대해 딱 RSA를 이해하는데 필요한 정도만 우선 확인하고 넘어가자.
 
 [^1]: 원주율을 표시할 때 사용하는 \\(\pi\\)와의 구분을 위해 ’피’라 읽기도 하는데 여기서는 ’파이’로 표기한다.
 
