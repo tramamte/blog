@@ -340,9 +340,7 @@ $$ = ((o ^ {k(q-1)}) ^ {(p-1)} \bmod p)(o \bmod p) \bmod p$$
 
 \\(o\\)는 \\(q\\)의 배수이고, \\(p\\)를 인수로 포함하지 않기 때문에 \\(o ^ {k(q-1)}\\)은 \\(p\\)로 나누어 떨어지지 않는다. 페르자 소정리를 적용해 정리하면 다음과 같다.
 
-$$ ((o ^ k) ^ {(p-1)(q-1)} \times o) \bmod p $$
-
-$$ = ((o ^ {k(q-1)}) ^ {(p-1)} \bmod p)(o \bmod p) \bmod p$$
+$$ ((o ^ {k(q-1)}) ^ {(p-1)} \bmod p)(o \bmod p) \bmod p$$
 
 $$ = 1 \times (o \bmod p) \bmod p = o \bmod p$$
 
