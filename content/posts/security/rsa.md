@@ -21,7 +21,7 @@ RSA 암호화는 암호화/복호화에 서로 다른 키를 사용하는 대표
 
 # 기반 지식
 
-나머지 연산의 성질 몇 가지와 오일러 파이[^1] 함수 (Euler's phi function 또는 Euler's totient function), 페르마 소정리 (Fermat's little theorem)와 이의 일반화 형태인 오일러 정리 (Euler's theorem), 중국인의 나머지 정리 (CRT, Chinese Remainder Theorem)에 대해 딱 RSA를 이해하는데 필요한 정도만 우선 확인하고 넘어가자.
+나머지 연산의 성질 몇 가지와 오일러 파이[^1] 함수 (Euler's phi function 또는 Euler's totient function), 페르마 소정리 (Fermat's little theorem)와 이의 일반화 형태인 오일러 정리 (Euler's theorem), 중국인의 나머지 정리 (Chinese remainder theorem, CRT)에 대해 딱 RSA를 이해하는데 필요한 정도만 우선 확인하고 넘어가자.
 
 [^1]: 원주율을 표시할 때 사용하는 \\(\pi\\)와의 구분을 위해 ’피’라 읽기도 하는데 여기서는 ’파이’로 표기한다.
 
@@ -229,7 +229,7 @@ $$ (a ^ {\varphi(n)} - 1)\,\bmod\,n = 0 $$
 
 $$ \therefore a ^ {\varphi(n)}\,\bmod\,n = 1 $$
 
-## 중국인의 나머지 정리 (Chinese Remainder Theorem)
+## 중국인의 나머지 정리 (Chinese remainder theorem)
 
 중국인의 나머지 정리는 연립 합동 산술의 해의 존재성과 유일성을 증명하는 정리인데, RSA 절차를 증명하는데 필요한 부분만 발췌해 간단히 기술하면 다음과 같다.
 
