@@ -60,6 +60,7 @@
   <!-- Flowchart -->
   <script src="/js/raphael.min.js"></script>
   <script src="/js/flowchart.min.js"></script>
+  <script>var flowGlobalId = 0;</script>
       {{ else if eq $val "sequence"}}
   <!-- Sequence Diagram -->
   <link rel="stylesheet" href="/css/sequence-diagram-min.css">
@@ -67,6 +68,7 @@
   <script src="/js/snap.svg-min.js"></script>
   <script src="/js/underscore-min.js"></script>
   <script src="/js/sequence-diagram-min.js"></script>
+  <script>var sequenceGlobalId = 0;</script>
       {{ else if eq $val "mermaid" }}
   <!-- Mermaid -->
   <script src="https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js" onload="mermaidReady()" defer></script>

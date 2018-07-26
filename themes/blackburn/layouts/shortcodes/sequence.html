@@ -1,13 +1,12 @@
 {{ if .Inner }}
-{{ $uid := string now.UnixNano }}
-<div class="sequence" id="sequence{{ $uid }}"
-  align="{{ if .Get "align" }}{{ .Get "align" }}{{ else }}left{{ end }}"></div>
 <script>
+  var sequenceId = 'sequence' + sequenceGlobalId++;
+  document.write('<div class="sequence" id="' + sequenceId + '" align="{{ if .Get "align" }}{{ .Get "align" }}{{ else }}left{{ end }}"></div>');
   var seq = Diagram.parse("{{ safeHTML .Inner }}");
   {{ if and (.Get "theme") (eq (.Get "theme") "hand") }}
-  seq.drawSVG('sequence{{ $uid }}', {theme: 'hand'});
+  seq.drawSVG(sequenceId, {theme: 'hand'});
   {{ else }}
-  seq.drawSVG('sequence{{ $uid }}', {theme: 'simple'});
+  seq.drawSVG(sequenceId, {theme: 'simple'});
   {{ end }}
 </script>
 {{ end }}
