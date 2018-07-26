@@ -1,9 +1,9 @@
 +++
-title = "함수 타입"
-description = "Function type"
+title = "함수 타입과 익명 함수"
+description = "Function type and anonymous function"
 topics = ["go"]
 tags = ["syntax-go"]
-slug = "function-type"
+slug = "function-type-and-anonymous-function"
 date = "2018-07-25T21:18:07+09:00"
 imports = ["math", "zimg", "flowchart", "sequence", "mermaid"]
 draft = true
