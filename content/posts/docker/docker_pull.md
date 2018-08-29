@@ -1,0 +1,33 @@
++++
+title = "Docker 동시 다운로드 개수 조절"
+description = "이미지 동시 다운로드 개수 조절하기"
+topics = ["docker"]
+tags = ["image", "pull"]
+slug = "docker-pull"
+date = "2018-08-29T20:46:30+09:00"
+imports = [""]
+draft = true
+
++++
+
+`docker pull` 명령으로 이미지를 다운로드하면 기본적으로 동시에 3개의 파일을 동시에 내려받는다. 그런데 네트워크 환경이 좋지 않거나 대역폭이 제한돼 있으면 종종 타임아웃이 발생해 더 이상 내려받지 않고 정지해 있는 상황이 발생하다. 이런 경우에는 동시 다운로드 개수를 낮추면 문제를 해결할 수 있다.
+
+동시 다운로드 개수는 [루트 디렉토리를 변경]({{<ref "20180531-12-49">}})하는 것처럼 docker 데몬의 시작 옵션을 변경해 조절할 수 있다.
+
+```bash
+$ dockerd --help
+...
+--max-concurrent-downloads int    Set the max concurrent downloads for
+                                  each pull (default 3)
+...
+```
+
+기본값이 3으로 지정된 `--max-concurrent-downloads`를 원하는 값으로 변경하면 된다.
+
+systemd를 사용하는 Ubuntu의 경우에는  /lib/systemd/system/docker.service 파일의 ExecStart에 다음과 같이 값을 추가하면 된다.
+
+```bash
+# ExecStart=/usr/bin/dockerd -H fd://
+ExecStart=/usr/bin/dockerd -H fd:// --max-concurrent-downloads 1
+```
+
