@@ -18,7 +18,7 @@ draft = true
 
 # 메서드 리시버 (Method Receiver)
 
-사실 메서드 리시버는 완전히 새로운 개념은 아니다. C++ 멤버 함수를 구현하는 경우를 보자. 
+생소한 이름이니 익숙한 곳에서 굳이 비슷한 역할을 찾아보자. 
 
 ```c++
 class MyClass
@@ -31,10 +31,10 @@ public:
 }
 ```
 
-이렇게 멤버 함수의 선언과 구현은 동시에 하기도 하지만 선언부와 구현부를 나눌 수도 있다.
+C++ 클래스의 멤버 함수는 이렇게 선언과 정의를 동시에 하기도 하지만 나눌 수도 있다.
 
 ```c++
-// my_header.h
+// my_class.h
 class MyClass
 {
 public:
@@ -43,16 +43,16 @@ public:
 ```
 
 ```c++
-// my_header.cpp
+// my_class.cpp
 void MyClass::MyFunction()
 {
 	// This is MyFunction
 }
 ```
 
-`MyFunction()`이 `MyClass`의 멤버임을 알려주는 방법이 바로 `MyClass::`이다. 즉, `MyFunction()` 호출에 대한 수신자 (receiver)가 바로 `MyClass`이다.
+ `MyClass`의 멤버임을 알려주기 위해 `MyFunction()` 앞에  `MyClass::`를 붙였다. 바로 이 부분을 C++의 메서드 리시버라 생각하면 이해가 빠를 것이다.
 
-Go는 이와 유사하게 함수를 정의할 때 해당 함수를 받을 타입을 명시함으로써 메서드를 만든다.
+Go에서 메서드를 만드는 방식은 다음과 같다.
 
 ```
 MethodDecl     = "func" Receiver MethodName Signature [ FunctionBody ] .
@@ -62,8 +62,11 @@ ParameterList  = ParameterDecl { "," ParameterDecl } .
 ParameterDecl  = [ IdentifierList ] [ "..." ] Type .
 ```
 
-위와 같이 정의돼 있기는 하지만 다음과 같은 제약이 있다.
+다음과 같은 제약 및 특징이 있다.
 
 - Parameters는 단일, non-variadic이어야 한다.
 - 타입은 T 또는 *T일 수 있다.
 - 기본 타입이나 패키지 내에 존재하지 않는 타입에 대해서는 메서드를 정의할 수 없다.
+
+C++ 예를 통해 보면 첫 번째와 세 번째는 어찌 보면 당연해 보이고, 두 번째 특징이 조금은 특이해 보인다. 이는 Go의 메서드 리시버가 함수의 소속을 나타내는 역할뿐만 아니라 인수(parameter)의 역할도 동시에 하기 때문으로 아래에서 살펴보기로 하자.
+
