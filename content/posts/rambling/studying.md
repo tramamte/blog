@@ -1,5 +1,5 @@
 +++
-title = "독서실"
+title = "학습실"
 description = "Now studying"
 topics = ["rambling"]
 tags = ["study"]
