@@ -4,7 +4,7 @@ description = "Now reading"
 topics = ["rambling"]
 tags = ["read", "book"]
 slug = "now-reading"
-date = "2019-01-01T10:16:20+09:00"
+date = "2019-01-04T13:00:20+09:00"
 imports = [""]
 draft = false
 
@@ -12,5 +12,8 @@ draft = false
 
 아주 짧은 세계사
 
-: 제프리 블레이니 지음, 박중서 옮김 | Humainst
+: 제프리 블레이니 (박중서) | Humainst
 
+청춘의 독서
+
+: 유시민 | 웅진 지식하우스
