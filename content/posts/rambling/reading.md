@@ -4,7 +4,7 @@ description = "Now reading"
 topics = ["rambling"]
 tags = ["read", "book"]
 slug = "now-reading"
-date = "2019-01-04T13:00:20+09:00"
+date = "2019-01-16T20:29:00+09:00"
 imports = [""]
 draft = false
 
@@ -17,3 +17,8 @@ draft = false
 청춘의 독서
 
 : 유시민 | 웅진 지식하우스
+
+철학, 삶을 만나다
+
+: 강신주 | 이학사
+
