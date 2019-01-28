@@ -12,7 +12,7 @@ hasCJKLanguage = true
 # Server-side Chroma syntax highlighting
 pygmentsCodefences = true
 pygmentsUseClassic = false
-pygmentsStyle = "tango"
+pygmentsStyle = "friendly"
 pygmentsCodefencesGuessSyntax = true
 #pygmentsOptions = "linenos=table"
 enableEmoji = true
