@@ -4,7 +4,7 @@ description = "Now reading"
 topics = ["rambling"]
 tags = ["read", "book"]
 slug = "now-reading"
-date = "2019-01-16T20:29:00+09:00"
+date = "2019-01-27T21:30:00+09:00"
 imports = [""]
 draft = false
 
@@ -22,3 +22,10 @@ draft = false
 
 : 강신주 | 이학사
 
+이유가 있어요
+
+: 요시타케 신스케 (김정화) | 봄나무
+
+심심해 심심해
+
+: 요시타케 신스케 (고향옥) | 김영사
