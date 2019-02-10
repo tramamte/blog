@@ -4,7 +4,7 @@ description = "Now reading"
 topics = ["rambling"]
 tags = ["read", "book"]
 slug = "now-reading"
-date = "2019-01-27T21:30:00+09:00"
+date = "2019-02-08T21:30:00+09:00"
 imports = [""]
 draft = false
 
@@ -29,3 +29,7 @@ draft = false
 심심해 심심해
 
 : 요시타케 신스케 (고향옥) | 김영사
+
+나는 왜 무기력을 되풀이하는가
+
+: 에리히 프롬 (장혜경) | 나무생각
