@@ -4,7 +4,7 @@ description = "Now reading"
 topics = ["rambling"]
 tags = ["read", "book"]
 slug = "now-reading"
-date = "2019-02-08T21:30:00+09:00"
+date = "2019-02-14T12:45:00+09:00"
 imports = [""]
 draft = false
 
@@ -33,3 +33,8 @@ draft = false
 나는 왜 무기력을 되풀이하는가
 
 : 에리히 프롬 (장혜경) | 나무생각
+
+달리기를 말할 때 내가 하고 싶은 이야기
+
+: 무라카미 하루키 (임홍빈) | 문학사상
+
