@@ -4,7 +4,7 @@ description = "Now reading"
 topics = ["rambling"]
 tags = ["read", "book"]
 slug = "now-reading"
-date = "2019-02-14T12:45:00+09:00"
+date = "2019-02-17T22:45:00+09:00"
 imports = [""]
 draft = false
 
@@ -37,4 +37,8 @@ draft = false
 달리기를 말할 때 내가 하고 싶은 이야기
 
 : 무라카미 하루키 (임홍빈) | 문학사상
+
+마른새우
+
+: 김하늘 글, 김상섭 그림 | 여명미디어
 
