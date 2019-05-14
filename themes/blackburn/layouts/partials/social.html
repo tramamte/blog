@@ -185,9 +185,9 @@
     </li>
     {{ end }}
 
-    {{ if .RSSLink }}
+    {{ with .OutputFormats.Get "RSS" }}
     <li class="pure-menu-item">
-      <a class="pure-menu-link" href="{{ .RSSLink }}"><i class="fas fa-rss fa-fw"></i>RSS</a>
+      <a class="pure-menu-link" href="{{ .RelPermalink }}"><i class="fas fa-rss fa-fw"></i>RSS</a>
     </li>
     {{ else }}
     <li class="pure-menu-item">
