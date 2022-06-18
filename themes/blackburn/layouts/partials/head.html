@@ -71,7 +71,7 @@
   <script>var sequenceGlobalId = 0;</script>
       {{ else if eq $val "mermaid" }}
   <!-- Mermaid -->
-  <script src="https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js" onload="mermaidReady()" defer></script>
+  <script src="https://unpkg.com/mermaid@9.1.2/dist/mermaid.min.js" onload="mermaidReady()" defer></script>
   <script>
     var mermaidReady = function() {
       var config = {
@@ -94,10 +94,10 @@
   {{ end }}
 
   {{ with .Site.Params.highlightjs }}
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/{{ . }}.min.css">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/{{ . }}.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
   {{ range $.Site.Params.highlightjs_extra_languages }}
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/{{ . }}.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/languages/{{ . }}.min.js"></script>
   {{ end }}
   <script>hljs.initHighlightingOnLoad();</script>
   {{ end }}
