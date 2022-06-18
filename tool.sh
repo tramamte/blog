@@ -34,6 +34,16 @@ deploy() {
 	popd
 }
 
+test() {
+	KERNEL=$(uname -r)
+	if [[ $KERNEL == *"microsoft"* ]]; then
+		IP=$(ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
+		hugo server -D --bind $IP --baseURL http://$IP
+	else
+		hugo server -D
+	fi
+}
+
 usage() {
 	echo -e "\033[0;36mUsage: $1 <command> [log]\033[0m"
 	echo ""
@@ -41,6 +51,7 @@ usage() {
 	echo "  update (u)        Pull blog and public from GitHub"
 	echo "  push   (p) [log]  Push blog to GitHub"
 	echo "  deploy (d) [log]  Push public to GitHub"
+	echo "  test   (t)        Run test server for draft"
 }
 
 if [ $# -eq 0 ]; then
@@ -54,6 +65,8 @@ else
 	elif [ "$1" == "deploy" -o "$1" == "d" ]; then
 		shift
 		deploy "$@"
+	elif [ "$1" == "test" -o "$1" == "t" ]; then
+		test
 	else
 		usage "$0"
 	fi
